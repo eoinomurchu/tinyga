@@ -16,49 +16,50 @@ Fitness/Error is minimising.
 
 ### Parameters ###
 There are six command line arguments/parameters. <code>params</code> holds a pointer to them:
-* Problem or individual length
-* Population Size
-* Number of generations/iterations
-* Crossover probability/1\-Reproduction probability
-* Mutation probability
-* Random number generator seed
+   * Problem or individual length
+   * Population Size
+   * Number of generations/iterations
+   * Crossover probability/1\-Reproduction probability
+   * Mutation probability
+   * Random number generator seed
 <code>atoi</code> is used throughout to convert the parameter strings to integer values.
+
 ### Data Structures ###
 
 The data structures are as follows:
-* A 2\*PopSize\*IndiviualSize _Bool array to store the current generation's population and the next generation's population. These alternate using <code>mod 2</code>
-* A 2\*PopSize int array to store the fitness values
-* A 2\*PopSize double array to store the selection probabilities
-** Fitness and selection probability could be one dimensional of size PopSize I guess
+   * A 2\*PopSize\*IndiviualSize _Bool array to store the current generation's population and the next generation's population. These alternate using <code>mod 2</code>
+   * A 2\*PopSize int array to store the fitness values
+   * A 2\*PopSize double array to store the selection probabilities
+   * Fitness and selection probability could be one dimensional of size PopSize I guess
 
 ### Allocation ###
 
 The data structures are then allocated on the heap using the recursive <code>allocateNdArrays</code> function. 
-* The memory allocated at each recursive call depends on two parameters, <code>dimensions</code>, how many dimensions out of N are left to be allocated, and <code>paramLevel</code>, which index from <code>params</code> should read for the size of this current dimension
-** There are two cases for <code>dimensions</code>:
-*** <code>&gt; 1</code> the data type size being allocated is that of a pointer
-*** Otherwise, allocate the actual data type size, stored in <code>baseSize</code>
-** There are also two cases for <code>paramLevel</code>
-*** <code>paramLevel \=\= 3</code> i.e., generational level, only use size 2 for this dimension
-*** Otherwise use size of <code>params\[paramLevel\] \+ 1</code> for this dimension
+   * The memory allocated at each recursive call depends on two parameters, <code>dimensions</code>, how many dimensions out of N are left to be allocated, and <code>paramLevel</code>, which index from <code>params</code> should read for the size of this current dimension
+      * There are two cases for <code>dimensions</code>:
+         * <code>&gt; 1</code> the data type size being allocated is that of a pointer
+         * Otherwise, allocate the actual data type size, stored in <code>baseSize</code>
+      * There are also two cases for <code>paramLevel</code>
+         * <code>paramLevel \=\= 3</code> i.e., generational level, only use size 2 for this dimension
+         * Otherwise use size of <code>params\[paramLevel\] \+ 1</code> for this dimension
 
 ### Initialisation ###
 
 Initialisation is as follows:
-* Normally two for-loops but since size is an issue, the product of the two ranges are used as a new range: <code>params\[2\] \* params\[1\]</code>
-* To extract the first variable from this range, divide by the second value
-* To extract the second variable from this range, mod by the second
+   * Normally two for-loops but since size is an issue, the product of the two ranges are used as a new range: <code>params\[2\] \* params\[1\]</code>
+   * To extract the first variable from this range, divide by the second value
+   * To extract the second variable from this range, mod by the second
 
 ### Generation Loop ###
 
 Loop from generation 0 while less than the total number of generations and the best inidividual evaluated has a fitness &gt; 0.
-* Evaluate/Call fitness function
-* Print stats
-* Perform genetic operations
+   * Evaluate/Call fitness function
+   * Print stats
+   * Perform genetic operations
 After exiting the loop, only perform the last evaluation if the final generation was reached. Otherwise Success!.
 
 ### Fitness Evaluation ###
-* TODO
+   * TODO
 
 ### Print Stats ###
 
@@ -68,9 +69,9 @@ Prints out the current generation, average fitness in the population, best fitne
 During fitness evaluation each individual is assigned a selection probability. A random number in the range \[0, 1\] is generated. Iterating through the population, the selection probability of each individual is subtracted from the random number. This continues until the random number is &lt; zero. The last individual iterated over is selected. 
 
 ### Genetic Operaions ###
-* An individual is selected from the population using <code>selecti</code> and is copied into the next generation's population.
-* Another inidividual is selected.
-** A number from the range \[0, 100\) is generated and compared against the crossover probability in <code>params</code>: 
-*** If &lt; this probability, another random number is chosen in the range [0, IndividualSize) and over the start of the previously copied individual \(crossover\)
-*** Otherwise, nothing else is copied \(reproduction\)
-* This new individual is iterated over, checking each bit to see if mutation events should occur. 
+   * An individual is selected from the population using <code>selecti</code> and is copied into the next generation's population.
+   * Another inidividual is selected.
+      * A number from the range \[0, 100\) is generated and compared against the crossover probability in <code>params</code>: 
+         * If &lt; this probability, another random number is chosen in the range [0, IndividualSize) and over the start of the previously copied individual \(crossover\)
+         * Otherwise, nothing else is copied \(reproduction\)
+   * This new individual is iterated over, checking each bit to see if mutation events should occur. 
