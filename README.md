@@ -22,6 +22,7 @@ There are six command line arguments/parameters. <code>params</code> holds a poi
    * Crossover probability/1\-Reproduction probability
    * Mutation probability
    * Random number generator seed
+
 <code>atoi</code> is used throughout to convert the parameter strings to integer values.
 
 ### Data Structures ###
@@ -40,15 +41,15 @@ The data structures are then allocated on the heap using the recursive <code>all
          * <code>&gt; 1</code> the data type size being allocated is that of a pointer
          * Otherwise, allocate the actual data type size, stored in <code>baseSize</code>
       * There are also two cases for <code>paramLevel</code>
-         * <code>paramLevel \=\= 3</code> i.e., generational level, only use size 2 for this dimension
-         * Otherwise use size of <code>params\[paramLevel\] \+ 1</code> for this dimension
+         * <code>paramLevel == 3</code> i.e., generational level, only use size 2 for this dimension
+         * Otherwise use size of <code>params\[paramLevel\]</code> for this dimension
 
 ### Initialisation ###
 
 Initialisation is as follows:
-   * Normally two for-loops but since size is an issue, the product of the two ranges are used as a new range: <code>params\[2\] \* params\[1\]</code>
-   * To extract the first variable from this range, divide by the second value
-   * To extract the second variable from this range, mod by the second
+   * Normally two for-loops but since size is an issue, the product of the two ranges are used as a new range for a single loop: <code>params\[2\] \* params\[1\]</code>
+      * To extract the first variable from this range, divide by the second value
+      * To extract the second variable from this range, mod by the second
 
 ### Generation Loop ###
 
@@ -56,6 +57,7 @@ Loop from generation 0 while less than the total number of generations and the b
    * Evaluate/Call fitness function
    * Print stats
    * Perform genetic operations
+
 After exiting the loop, only perform the last evaluation if the final generation was reached. Otherwise Success!.
 
 ### Fitness Evaluation ###
@@ -69,9 +71,9 @@ Prints out the current generation, average fitness in the population, best fitne
 During fitness evaluation each individual is assigned a selection probability. A random number in the range \[0, 1\] is generated. Iterating through the population, the selection probability of each individual is subtracted from the random number. This continues until the random number is &lt; zero. The last individual iterated over is selected. 
 
 ### Genetic Operaions ###
-   * An individual is selected from the population using <code>selecti</code> and is copied into the next generation's population.
+   * An individual is selected from the population using <code>selecti</code> and is copied into the next generation's population
    * Another inidividual is selected.
-      * A number from the range \[0, 100\) is generated and compared against the crossover probability in <code>params</code>: 
+      * A number from the range \[0, 100\) is generated and compared against the crossover probability in <code>params\[4\]</code>: 
          * If &lt; this probability, another random number is chosen in the range [0, IndividualSize) and over the start of the previously copied individual \(crossover\)
          * Otherwise, nothing else is copied \(reproduction\)
-   * This new individual is iterated over, checking each bit to see if mutation events should occur. 
+   * This new individual is iterated over, checking each bit to see if mutation events should occur, <code>rand() % 100 < params\[5\]</code>
