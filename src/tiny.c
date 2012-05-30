@@ -45,7 +45,7 @@ void print() {
 }
 
 void allocateNdArrays(void **array, long baseSize, int dimensions, int paramLevel) {
-  *array = malloc(dimensions == 1 ? baseSize*atoi(params[paramLevel]) : sizeof(void *)* (paramLevel == 3 ? 2 : (atoi(params[paramLevel])+1)));
+  *array = malloc(dimensions == 1 ? baseSize*atoi(params[paramLevel]) : sizeof(void *)* (paramLevel == 3 ? 2 : atoi(params[paramLevel])));
   int row; for (row = 0; row <= (paramLevel == 3 ? 2 : atoi(params[paramLevel])) && dimensions > 1; row++)
     allocateNdArrays(*array+row*sizeof(void *), baseSize, dimensions-1, paramLevel-1);
 }
