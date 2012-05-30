@@ -8,11 +8,11 @@ A Tiny GA written in C as a submission to [The Murphy Cup](http://cup.murph.ie "
 
 ## Description ##
 
-The goal is to create as a short as possible (but still comprehendible) a fixed length binary [GA]() to solve the [OneMax problem](). The GA is requried to use crossover (xo), reproduction and mutation as genetic operators and [fitness proportionate selection]() for... selection.
+The goal is to create as a short as possible \(but still comprehendible\) a fixed length binary [GA](http://en.wikipedia.org/wiki/Genetic_algorithm) to solve the [OneMax problem](http://tracer.lcc.uma.es/problems/onemax/onemax.html). The GA is requried to use crossover \(xo\), reproduction and mutation as genetic operators and [fitness proportionate selection](http://en.wikipedia.org/wiki/Fitness_proportionate_selection) for... selection.
 
 Fitness/Error is minimising.
 
-<code>rand</code> from <code>stdlib.h</code> is used throughout. The last parameter is used as a seed using <code>srand</code>.
+<code>rand</code> from <code>stdlib.h</code> is used throughout. The <code>params\[6\] is used as a seed using <code>srand</code>.
 
 ### Parameters ###
 There are six command line arguments/parameters. <code>params</code> holds a pointer to them:
