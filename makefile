@@ -6,7 +6,7 @@ PWD   := $(shell pwd)
 
 TARGET = tinyga
 CC = gcc
-CFLAGS = -v -g -Wall
+CFLAGS = -g -Wall
 
 all: tiny tinytiny
 
