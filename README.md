@@ -10,9 +10,15 @@ E.g.,
 
 `./tinyga 10 10 100 50 5 1`
 
+Also
+
+`./tinytinyga 10 10 100 50 5 1`
+
+which is a more concisely written version of tinyga.
+
 ## Description ##
 
-The goal is to create as a short as possible \(but still comprehendible\) a fixed length binary [GA](http://en.wikipedia.org/wiki/Genetic_algorithm) to solve the [OneMax problem](http://tracer.lcc.uma.es/problems/onemax/onemax.html). The GA is requried to use crossover \(xo\), reproduction and mutation as genetic operators and [fitness proportionate selection](http://en.wikipedia.org/wiki/Fitness_proportionate_selection) for... selection.
+The goal is to create as a short as possible \(but still comprehensible\) a fixed length binary [GA](http://en.wikipedia.org/wiki/Genetic_algorithm) to solve the [One-Max problem](http://tracer.lcc.uma.es/problems/onemax/onemax.html). The GA is required to use crossover \(xo\), reproduction and mutation as genetic operators and [fitness proportionate selection](http://en.wikipedia.org/wiki/Fitness_proportionate_selection) for... selection.
 
 Fitness/Error is minimising.
 
@@ -61,7 +67,7 @@ Initialisation is as follows:
 
 ### Generation Loop ###
 
-Loop from generation 0 while less than the total number of generations and the best inidividual evaluated has a fitness &gt; 0.
+Loop from generation 0 while less than the total number of generations and the best individual evaluated has a fitness &gt; 0.
 
    * Evaluate/Call fitness function
    * Print stats
@@ -74,9 +80,9 @@ After exiting the loop, only perform the last evaluation if the final generation
 Iterate over each individual of the population to assign fitness values
 
    * Calculate the fitness by iterating over the individual and counting the number of bits set to 1
-      * The fitness value used is actually the error, which is minimised, so subtract this number from the length of inividual/problem size/<code>params\[1\]</code>
+      * The fitness value used is actually the error, which is minimised, so subtract this number from the length of individual/problem size/<code>params\[1\]</code>
       * Also keep track of index of the most fit individual in <code>best</code>
-      * Over the loop a number of variables are cumulated, the <code>sum</code> of fitness and the <code>avg</code>. fitness of the population
+      * Over the loop a number of variables are accumulated, the <code>sum</code> of fitness and the <code>avg</code>. fitness of the population
 
 Next, the fitness values are used to assign selection probabilities, <code>selprob</code>
 
@@ -90,10 +96,10 @@ Outputs the current generation, average fitness in the population, best fitness 
 ### Selection ###
 During fitness evaluation each individual is assigned a selection probability. A random number in the range \[0, 1\] is generated. Iterating through the population, the selection probability of each individual is subtracted from the random number. This continues until the random number is &lt; zero. The last individual iterated over is selected. 
 
-### Genetic Operaions ###
+### Genetic Operations ###
 
    * An individual is selected from the population using <code>selecti</code> and is copied into the next generation's population
-   * Another inidividual is selected
+   * Another individual is selected
       * A number from the range \[0, 100\) is generated and compared against the crossover probability in <code>params\[4\]</code>: 
          * If &lt; this probability, another random number is chosen in the range [0, IndividualSize) and over the start of the previously copied individual \(crossover\)
          * Otherwise, nothing else is copied \(reproduction\)
