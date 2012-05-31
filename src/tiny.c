@@ -5,7 +5,7 @@
 #include <string.h>
 
 bool ***populations;
-int **fitness, gen, j, k, bits, best;
+int **fitness, gen, j, k, onBits, best;
 double **selprob, sum, avg, r;
 char **params;
 
@@ -23,14 +23,10 @@ void xo_and_rep_then_mut() {
   }
 }
 
-int countBits(bool individual[]) {
-  for (bits = 0, k = 0; k < atoi(params[1]); bits += individual[k++]);
-  return bits;
-}
-
-void eval() {
+void fitnessFunction() {
   for (avg = 0.0, sum = 0.0, best = 0, j = 0; j < atoi(params[2]); sum += fitness[gen % 2][j], avg += ((double)fitness[gen % 2][j])/atoi(params[2]), ++j) {
-    fitness[gen % 2][j] = atoi(params[1]) - countBits(populations[gen % 2][j]);
+    for (onBits = 0, k = 0; k < atoi(params[1]); onBits += populations[gen % 2][j][k++]);
+    fitness[gen % 2][j] = atoi(params[1]) - onBits;
     best = fitness[gen % 2][j] < fitness[gen % 2][best] ? j : best;
   }
   for (j = 0; j < atoi(params[2]); j++)
@@ -61,11 +57,11 @@ int main (int argc, char **args) {
     populations[0][j / atoi(params[1])][j % atoi(params[1])] = rand() % 2;
   printf("Generation     Avg. Fitness   Best Fitness   Best Individual\n");
   for (gen = 0; gen < atoi(params[3]) && (gen > 0 ? fitness[(gen-1) % 2][best] > 0 : 1); gen++) {
-    eval();
+    fitnessFunction();
     print();
     xo_and_rep_then_mut();
   }
-  if (gen == atoi(params[3])) { eval(); print(); }
+  if (gen == atoi(params[3])) { fitnessFunction(); print(); }
   else printf("Success!\n");
   return 0;
 }
