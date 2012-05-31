@@ -6,6 +6,10 @@ A Tiny GA written in C as a submission to [The Murphy Cup](http://cup.murph.ie "
 
 `./tinyga length popsize generations xo_percentage mutation_percentage random_seed`
 
+E.g.,
+
+`./tinyga 10 10 100 50 5 1`
+
 ## Description ##
 
 The goal is to create as a short as possible \(but still comprehendible\) a fixed length binary [GA](http://en.wikipedia.org/wiki/Genetic_algorithm) to solve the [OneMax problem](http://tracer.lcc.uma.es/problems/onemax/onemax.html). The GA is requried to use crossover \(xo\), reproduction and mutation as genetic operators and [fitness proportionate selection](http://en.wikipedia.org/wiki/Fitness_proportionate_selection) for... selection.
