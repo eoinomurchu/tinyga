@@ -19,7 +19,9 @@ Fitness/Error is minimising.
 <code>rand</code> from <code>stdlib.h</code> is used throughout. The <code>params\[6\] is used as a seed using <code>srand</code>.
 
 ### Parameters ###
+
 There are six command line arguments/parameters. <code>params</code> holds a pointer to them:
+
    * Problem or individual length
    * Population Size
    * Number of generations/iterations
@@ -32,14 +34,15 @@ There are six command line arguments/parameters. <code>params</code> holds a poi
 ### Data Structures ###
 
 The data structures are as follows:
+
    * A 2\*PopSize\*IndiviualSize _Bool array to store the current generation's population and the next generation's population. These alternate using <code>mod 2</code>
-   * A 2\*PopSize int array to store the fitness values
-   * A 2\*PopSize double array to store the selection probabilities
-   * Fitness and selection probability could be one dimensional of size PopSize I guess
+   * A PopSize int array to store the fitness values
+   * A PopSize double array to store the selection probabilities
 
 ### Allocation ###
 
 The data structures are then allocated on the heap using the recursive <code>allocateNdArrays</code> function. 
+
    * The memory allocated at each recursive call depends on two parameters, <code>dimensions</code>, how many dimensions out of N are left to be allocated, and <code>paramLevel</code>, which index from <code>params</code> should read for the size of this current dimension
       * There are two cases for <code>dimensions</code>:
          * <code>&gt; 1</code> the data type size being allocated is that of a pointer
@@ -51,6 +54,7 @@ The data structures are then allocated on the heap using the recursive <code>all
 ### Initialisation ###
 
 Initialisation is as follows:
+
    * Normally two for-loops but since size is an issue, the product of the two ranges are used as a new range for a single loop: <code>params\[2\] \* params\[1\]</code>
       * To extract the first variable from this range, divide by the second value
       * To extract the second variable from this range, mod by the second
@@ -58,6 +62,7 @@ Initialisation is as follows:
 ### Generation Loop ###
 
 Loop from generation 0 while less than the total number of generations and the best inidividual evaluated has a fitness &gt; 0.
+
    * Evaluate/Call fitness function
    * Print stats
    * Perform genetic operations
@@ -67,12 +72,14 @@ After exiting the loop, only perform the last evaluation if the final generation
 ### Fitness Evaluation ###
 
 Iterate over each individual of the population to assign fitness values
+
    * Calculate the fitness by iterating over the individual and counting the number of bits set to 1
       * The fitness value used is actually the error, which is minimised, so subtract this number from the length of inividual/problem size/<code>params\[1\]</code>
       * Also keep track of index of the most fit individual in <code>best</code>
       * Over the loop a number of variables are cumulated, the <code>sum</code> of fitness and the <code>avg</code>. fitness of the population
 
 Next, the fitness values are used to assign selection probabilities, <code>selprob</code>
+
    * Iterating over each individual dividing the individual's fitness by the sum of all fitness values in the population
       * The number of bits set to 1 is used here, as opposed to the error, so some additional calculation is required.
 
