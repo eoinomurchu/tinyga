@@ -61,14 +61,16 @@ Loop from generation 0 while less than the total number of generations and the b
 After exiting the loop, only perform the last evaluation if the final generation was reached. Otherwise Success!.
 
 ### Fitness Evaluation ###
-   * Iterate over each individual of the population to assign fitness values
-   ** Calculate the fitness by iterating over the individual and counting the number of bits set to 1
-   ** The fitness value used is actually the error, which is minimised, so subtract this number from the length of inividual/problem size/<code>params\[1\]</code>
-   ** Also keep track of index of the most fit individual in <code>best</code>
-   ** Over the loop a number of variables are cumulated, the <code>sum</code> of fitness and the <code>avg</code>. fitness of the population
-   * Next, the fitness values are used to assign selection probabilities, <code>selprob</code>
-   ** Iterating over each individual dividing the individual's fitness by the sum of all fitness values in the population
-   *** The number of bits set to 1 is used here, as opposed to the error, so some additional calculation is required.
+
+Iterate over each individual of the population to assign fitness values
+   * Calculate the fitness by iterating over the individual and counting the number of bits set to 1
+      * The fitness value used is actually the error, which is minimised, so subtract this number from the length of inividual/problem size/<code>params\[1\]</code>
+      * Also keep track of index of the most fit individual in <code>best</code>
+      * Over the loop a number of variables are cumulated, the <code>sum</code> of fitness and the <code>avg</code>. fitness of the population
+
+Next, the fitness values are used to assign selection probabilities, <code>selprob</code>
+   * Iterating over each individual dividing the individual's fitness by the sum of all fitness values in the population
+      * The number of bits set to 1 is used here, as opposed to the error, so some additional calculation is required.
 
 ### Print Stats ###
 
@@ -78,6 +80,7 @@ Outputs the current generation, average fitness in the population, best fitness 
 During fitness evaluation each individual is assigned a selection probability. A random number in the range \[0, 1\] is generated. Iterating through the population, the selection probability of each individual is subtracted from the random number. This continues until the random number is &lt; zero. The last individual iterated over is selected. 
 
 ### Genetic Operaions ###
+
    * An individual is selected from the population using <code>selecti</code> and is copied into the next generation's population
    * Another inidividual is selected
       * A number from the range \[0, 100\) is generated and compared against the crossover probability in <code>params\[4\]</code>: 
