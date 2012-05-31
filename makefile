@@ -9,7 +9,6 @@ CC = gcc
 CFLAGS = -v -g -Wall
 
 all: tiny tinytiny
-	${CC} ${CFLAGS} -o ${TARGET} ${SOURCES} ${INCLUDES} ${LIBS} 
 
 tiny:
 	${CC} ${CFLAGS} -o ${TARGET} ${TINY} ${INCLUDES} ${LIBS} 
