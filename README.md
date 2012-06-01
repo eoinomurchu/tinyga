@@ -22,7 +22,7 @@ The goal is to create as a short as possible \(but still comprehensible\) a fixe
 
 Fitness/Error is minimising.
 
-<code>rand</code> from <code>stdlib.h</code> is used throughout. The <code>params\[6\] is used as a seed using <code>srand</code>.
+<code>rand</code> from <code>stdlib.h</code> is used throughout. The <code>params\[6\]</code> is used as a seed using <code>srand</code>.
 
 ### Parameters ###
 
