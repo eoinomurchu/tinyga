@@ -3,9 +3,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 
 bool ***populations;
-int *fitness, gen, j, k, onBits, best;
+unsigned int *fitness, gen, j, k, onBits, best, seed;
 double *selprob, sum, avg, r;
 char **params;
 
@@ -49,12 +50,13 @@ void allocateNdArrays(void **array, long baseSize, int dimensions, int paramLeve
 /* 1 Len  2 Popsize  3 Gens  4 xo  5 mut  6 seed */
 int main(int argc, char **args) {
   params = args;
-  srand(atoi(params[6]));
+  srand(seed = (argc == 7 ? atoi(params[6]) : time(NULL)));
   allocateNdArrays((void**)&populations, sizeof(bool), 3, 3); 
   allocateNdArrays((void*)&fitness, sizeof(int), 1, 2); 
   allocateNdArrays((void*)&selprob, sizeof(double), 1, 2);
   for (j = 0; j < atoi(params[2])*atoi(params[1]); j++)
     populations[0][j / atoi(params[1])][j % atoi(params[1])] = rand() % 2;
+  printf("Length: %d\nPop size: %d\nGenerations: %d\nCrossover prob.: %.2f\nMut prob.: %.2f\nSeed: %d\n", atoi(params[1]), atoi(params[2]), atoi(params[3]), atoi(params[4])/100.0, atoi(params[5])/100.0, seed);
   printf("Generation     Avg. Fitness   Best Fitness   Best Individual\n");
   for (gen = 0; gen <= atoi(params[3]) && (gen > 0 ? fitness[best] > 0 : 1); gen++) {
     fitnessFunction();

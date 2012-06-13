@@ -3,9 +3,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 
 bool ***populations;
-int *fitness, gen, j, k, onBits, best;
+unsigned int *fitness, gen, j, k, onBits, best, seed;
 double *selprob, sum, avg, r;
 
 /**
@@ -31,8 +32,8 @@ void allocateNdArrays(void **array, long baseSize, int dimensions, int paramLeve
  * Entry Point
  */
 int main(int argc, char **args) {
-  //Seed
-  srand(atoi(args[6]));
+  //Seed, if none provided use time
+  srand(seed = (argc == 7 ? atoi(args[6]) : time(NULL)));
 
   //Set up data structures
   allocateNdArrays((void**)&populations, sizeof(bool), 3, 3, args); 
@@ -44,6 +45,7 @@ int main(int argc, char **args) {
     populations[0][j / atoi(args[1])][j % atoi(args[1])] = rand() % 2;
 
   //Print Headers
+  printf("Length: %d\nPop size: %d\nGenerations: %d\nCrossover prob.: %.2f\nMut prob.: %.2f\nSeed: %d\n", atoi(params[1]), atoi(params[2]), atoi(params[3]), atoi(params[4])/100.0, atoi(params[5])/100.0, seed);
   printf("Generation     Avg. Fitness   Best Fitness   Best Individual\n");
 
   //Generation Loop, break if successful
